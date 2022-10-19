@@ -200,6 +200,10 @@ public class ReallyExecutableJarMojo extends AbstractMojo
                 jar.finish();
             }
         }
+        finally
+        {
+            Files.deleteIfExists( original );
+        }
 
         file.setExecutable( true, false );
     }

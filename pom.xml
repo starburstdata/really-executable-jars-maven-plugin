@@ -23,7 +23,7 @@
 
     <groupId>com.starburstdata</groupId>
     <artifactId>really-executable-jar-maven-plugin</artifactId>
-    <version>1.5.0-SNAPSHOT</version>
+    <version>1.5.2</version>
     <packaging>maven-plugin</packaging>
 
     <name>Really Executable Jar Maven Plugin</name>
