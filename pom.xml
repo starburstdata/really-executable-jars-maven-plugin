@@ -13,22 +13,23 @@
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <groupId>org.basepom</groupId>
-        <artifactId>basepom-standard-oss</artifactId>
-        <version>9</version>
+        <artifactId>maven-plugins</artifactId>
+        <groupId>org.apache.maven.plugins</groupId>
+        <version>37</version>
+        <relativePath />
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.skife.maven</groupId>
+    <groupId>com.starburstdata</groupId>
     <artifactId>really-executable-jar-maven-plugin</artifactId>
-    <version>1.4.2-SNAPSHOT</version>
+    <version>1.5.0-SNAPSHOT</version>
     <packaging>maven-plugin</packaging>
 
     <name>Really Executable Jar Maven Plugin</name>
     <description>Make jar files *really* executable.</description>
 
-    <url>https://github.com/brianm/really-executable-jar-maven-plugin</url>
+    <url>https://github.com/wendigo/really-executable-jar-maven-plugin</url>
 
     <licenses>
         <license>
@@ -38,34 +39,28 @@
         </license>
     </licenses>
 
-    <developers>
-        <developer>
-            <id>brianm</id>
-            <name>Brian McCallister</name>
-        </developer>
-    </developers>
-
     <scm>
-        <connection>scm:git:git://github.com/brianm/really-executable-jars-maven-plugin.git</connection>
-        <developerConnection>scm:git:git@github.com:brianm/really-executable-jars-maven-plugin.git</developerConnection>
-        <url>https://github.com/brianm/really-executable-jars-maven-plugin</url>
+        <connection>scm:git:git://github.com/wendigo/really-executable-jars-maven-plugin.git</connection>
+        <developerConnection>scm:git:git@github.com:wendigo/really-executable-jars-maven-plugin.git</developerConnection>
+        <url>https://github.com/wendigo/really-executable-jars-maven-plugin</url>
       <tag>HEAD</tag>
   </scm>
 
     <properties>
-        <project.jdk7.home>${env.JAVA7_HOME}</project.jdk7.home>
-        <project.build.targetJdk>1.7</project.build.targetJdk>
-        <dep.maven-api.version>3.0</dep.maven-api.version>
-        <dep.plexus.version>1.5.5</dep.plexus.version>
-        <dep.plexus-utils.version>2.0.4</dep.plexus-utils.version>
-        <dep.plugin.plugin.version>3.4</dep.plugin.plugin.version>
+        <javaVersion>8</javaVersion>
+        <mavenVersion>3.8.6</mavenVersion>
+        <checkstyleVersion>9.3</checkstyleVersion>
+        <dep.plexus.version>2.1.1</dep.plexus.version>
+        <dep.plexus-utils.version>3.4.2</dep.plexus-utils.version>
+        <dep.plugin.plugin.version>3.6.4</dep.plugin.plugin.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.apache.maven</groupId>
             <artifactId>maven-plugin-api</artifactId>
-            <version>${dep.maven-api.version}</version>
+            <version>${mavenVersion}</version>
+            <scope>provided</scope>
             <exclusions>
                 <exclusion>
                     <groupId>org.sonatype.sisu</groupId>
@@ -82,21 +77,17 @@
         </dependency>
 
         <dependency>
-            <groupId>org.codehaus.plexus</groupId>
-            <artifactId>plexus-utils</artifactId>
-            <version>${dep.plexus-utils.version}</version>
-        </dependency>
-
-        <dependency>
             <groupId>org.apache.maven</groupId>
             <artifactId>maven-artifact</artifactId>
-            <version>${dep.maven-api.version}</version>
+            <version>${mavenVersion}</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.maven</groupId>
             <artifactId>maven-core</artifactId>
-            <version>${dep.maven-api.version}</version>
+            <version>${mavenVersion}</version>
+            <scope>provided</scope>
             <exclusions>
                 <exclusion>
                     <groupId>org.apache.maven.reporting</groupId>
@@ -136,6 +127,12 @@
                 </exclusion>
             </exclusions>
         </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-compress</artifactId>
+            <version>1.21</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -160,6 +157,25 @@
 
 
         <plugins>
+            <plugin>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <enforceBytecodeVersion>
+                                    <maxJdkVersion>1.9</maxJdkVersion>
+                                </enforceBytecodeVersion>
+                            </rules>
+                            <fail>true</fail>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-plugin-plugin</artifactId>
@@ -193,14 +209,6 @@
             </plugin>
 
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>findbugs-maven-plugin</artifactId>
-                <configuration>
-                    <excludeFilterFile>${project.basedir}/src/build/findbugsExcludeFilter.xml</excludeFilterFile>
-                </configuration>
-            </plugin>
-
-            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-pmd-plugin</artifactId>
                 <configuration>
@@ -211,38 +219,4 @@
             </plugin>
         </plugins>
     </build>
-
-    <profiles>
-        <profile>
-            <id>travis</id>
-            <activation>
-                <property>
-                    <name>env.TRAVIS</name>
-                </property>
-            </activation>
-            <properties>
-                <project.jdk7.home>${env.JAVA_HOME}</project.jdk7.home>
-            </properties>
-        </profile>
-        <profile>
-            <id>cross-compile</id>
-            <activation>
-                 <jdk>(1.7,]</jdk>
-            </activation>
-            <build>
-                <pluginManagement>
-                    <plugins>
-                        <plugin>
-                            <artifactId>maven-compiler-plugin</artifactId>
-                            <configuration>
-                                <compilerArguments children.combine="append">
-                                    <bootclasspath>${project.jdk7.home}/jre/lib/rt.jar:${project.jdk7.home}/jre/lib/jce.jar:${project.jdk7.home}/../classes/classes.jar</bootclasspath>
-                                </compilerArguments>
-                            </configuration>
-                        </plugin>
-                    </plugins>
-                </pluginManagement>
-            </build>
-        </profile>
-    </profiles>
 </project>
