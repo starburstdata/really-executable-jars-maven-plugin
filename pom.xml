@@ -21,7 +21,7 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.starburstdata</groupId>
+    <groupId>io.starburst</groupId>
     <artifactId>really-executable-jar-maven-plugin</artifactId>
     <version>1.5.2</version>
     <packaging>maven-plugin</packaging>
@@ -29,7 +29,7 @@
     <name>Really Executable Jar Maven Plugin</name>
     <description>Make jar files *really* executable.</description>
 
-    <url>https://github.com/wendigo/really-executable-jar-maven-plugin</url>
+    <url>https://github.com/starburstdata/really-executable-jar-maven-plugin</url>
 
     <licenses>
         <license>
@@ -40,9 +40,9 @@
     </licenses>
 
     <scm>
-        <connection>scm:git:git://github.com/wendigo/really-executable-jars-maven-plugin.git</connection>
-        <developerConnection>scm:git:git@github.com:wendigo/really-executable-jars-maven-plugin.git</developerConnection>
-        <url>https://github.com/wendigo/really-executable-jars-maven-plugin</url>
+        <connection>scm:git:git://github.com/starburstdata/really-executable-jars-maven-plugin.git</connection>
+        <developerConnection>scm:git:git@github.com:starburstdata/really-executable-jars-maven-plugin.git</developerConnection>
+        <url>https://github.com/starburstdata/really-executable-jars-maven-plugin</url>
       <tag>HEAD</tag>
   </scm>
 
