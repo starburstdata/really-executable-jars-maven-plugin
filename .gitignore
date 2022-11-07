@@ -12,3 +12,5 @@ out
 .settings
 *~
 test-output
+pom.xml.versionsBackup
+
