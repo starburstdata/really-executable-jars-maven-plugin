@@ -23,7 +23,7 @@
 
     <groupId>io.starburst</groupId>
     <artifactId>really-executable-jar-maven-plugin</artifactId>
-    <version>1.5.3</version>
+    <version>1.5.4-SNAPSHOT</version>
     <packaging>maven-plugin</packaging>
 
     <name>Really Executable Jar Maven Plugin</name>
@@ -43,7 +43,7 @@
         <connection>scm:git:git://github.com/starburstdata/really-executable-jars-maven-plugin.git</connection>
         <developerConnection>scm:git:git@github.com:starburstdata/really-executable-jars-maven-plugin.git</developerConnection>
         <url>https://github.com/starburstdata/really-executable-jars-maven-plugin</url>
-      <tag>really-executable-jar-maven-plugin-1.5.3</tag>
+      <tag>HEAD</tag>
   </scm>
 
     <properties>
